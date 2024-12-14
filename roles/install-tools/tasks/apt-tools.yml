@@ -12,6 +12,7 @@
 - name: 'Installing Packages'
   package:
     name:
+      - qemu-guest-agent
       - jq
       - exiftool
       - netexec
