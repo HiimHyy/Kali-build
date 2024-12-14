@@ -1,0 +1,5 @@
+---
+- name: 'Cloning kerbrute repository'
+  git:
+    repo: 'https://github.com/ropnop/kerbrute'
+    dest: '/opt/kerbrute'

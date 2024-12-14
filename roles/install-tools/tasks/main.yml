@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for install-tools
+- include_tasks: kerbrute.yml
+- include_tasks: apt-tools.yml
+- include_tasks: install-docker.yml
