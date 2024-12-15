@@ -1,3 +1,5 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # vars file for install-tools
+ansible_user: huy
+ansible_architecture: arm64
