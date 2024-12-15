@@ -14,9 +14,9 @@
     name:
       - qemu-guest-agent
       - jq
-      - exiftool
       - netexec
       - burpsuite
+      - neovim
     state: latest
   become: true
   become_method: sudo
