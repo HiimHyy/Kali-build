@@ -20,3 +20,16 @@
     state: latest
   become: true
   become_method: sudo
+
+- name: 'Cleanup unused packages'
+  apt:
+    autoremove: yes
+    autoclean: yes
+  become: true
+  become_method: sudo
+
+- name: 'Clean apt cache'
+  apt:
+    clean: yes
+  become: true
+  become_method: sudo
