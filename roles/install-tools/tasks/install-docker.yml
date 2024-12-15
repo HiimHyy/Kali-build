@@ -1,52 +1,15 @@
 ---
-- name: Gather facts
-  setup:
-    gather_subset:
-      - distribution
-      - architecture
-
-- name: Install prerequisites
-  apt:
-    name:
-      - ca-certificates
-      - curl
-      - gnupg
-    state: present
-    update_cache: yes
-  become: true
-
-- name: Create keyrings directory
-  file:
-    path: /etc/apt/keyrings
-    state: directory
+- name: Download Docker install script
+  get_url:
+    url: https://get.docker.com
+    dest: /tmp/get-docker.sh
     mode: '0755'
   become: true
 
-- name: Download Docker's GPG key
-  get_url:
-    url: 'https://download.docker.com/linux/{{ docker_os }}/gpg'
-    dest: /etc/apt/keyrings/docker.asc
-    mode: '0644'
-  become: true
-
-- name: Add Docker repository
-  apt_repository:
-    repo: 'deb [arch={{ docker_repo_arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ docker_os }} {{ docker_repo_dist }} stable'
-    state: present
-    filename: docker
-    update_cache: yes
-  become: true
-
-- name: Install Docker packages
-  apt:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-    state: present
-    update_cache: yes
+- name: Execute Docker install script
+  command: sh /tmp/get-docker.sh
+  register: docker_install
+  changed_when: docker_install.rc == 0
   become: true
 
 - name: Ensure Docker service is running
@@ -62,3 +25,8 @@
     groups: docker
     append: yes
   become: true
+
+- name: Clean up install script
+  file:
+    path: /tmp/get-docker.sh
+    state: absent
